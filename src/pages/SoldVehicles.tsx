@@ -36,7 +36,7 @@ interface Vehicle {
   auction: number;
   date: string;
   paddle: string;
-  buyerId: number;
+  buyerId: string;
   transId: number;
   customerName: string;
   paymentStatus: "paid" | "partial" | "unpaid";
@@ -68,9 +68,9 @@ const vehicles: Vehicle[] = [
     buyNow: false,
     preBid: false,
     auction: 1030,
-    date: "2025-06-21",
+    date: "2025-06-22",
     paddle: "550",
-    buyerId: 2437213,
+    buyerId: "2437213",
     transId: 0,
     customerName: "",
     paymentStatus: "paid",
@@ -149,7 +149,7 @@ const vehicles: Vehicle[] = [
         Math.random() > 0.5
           ? String(Math.floor(Math.random() * 1000) + 100)
           : `MAHBM${Math.floor(Math.random() * 100000)}`,
-      buyerId: Math.floor(Math.random() * 1000000) + 2000000,
+      buyerId: (Math.floor(Math.random() * 1000000) + 2000000).toString(),
       transId:
         Math.random() > 0.3 ? Math.floor(Math.random() * 200000) + 100000 : 0,
       customerName: [
@@ -229,6 +229,8 @@ const SoldVehicles: React.FC = () => {
   const [hoveredVin, setHoveredVin] = useState<string | null>(null);
   const [columnFilters, setColumnFilters] = useState({
     run: "",
+    auction: "",
+    date: "",
     lin: "",
     vin: "",
     year: "",
@@ -241,7 +243,7 @@ const SoldVehicles: React.FC = () => {
     transId: "",
     customerName: "",
   });
-  const [tooltTip, setToolTip] = useState(false);
+
   const [showhide, setshowhide] = useState(false);
 
   const [openGrid, setOpenGrid] = useState(false);
@@ -364,9 +366,7 @@ const SoldVehicles: React.FC = () => {
       const matchesSearch =
         vehicle.vin.toLowerCase().includes(searchTerm.toLowerCase()) ||
         vehicle.paddle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        `${vehicle.make} ${vehicle.model}`
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()) ||
+        vehicle.buyerId.toLowerCase().includes(searchTerm.toLowerCase()) ||
         vehicle.customerName.toLowerCase().includes(searchTerm.toLowerCase());
 
       // 2. Dropdown Filters (no changes here)
@@ -594,7 +594,7 @@ const SoldVehicles: React.FC = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="vin, paddle, make, model"
+                placeholder="vin, paddle, buyerID, Buyer Name"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 pr-4 py-2 w-52 md:w-64 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
@@ -765,8 +765,22 @@ const SoldVehicles: React.FC = () => {
                   </td>
                 )}
                 <td></td>
-                <td></td>
-                <td></td>
+                <td>
+                  <input
+                    type="text"
+                    placeholder="Auction"
+                    className="w-full px-2 py-1 text-sm border border-gray-300 rounded"
+                    onKeyDown={(e) => handleColumnFilterKeyDown(e, "auction")}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    placeholder="Date"
+                    className="w-full px-2 py-1 text-sm border border-gray-300 rounded"
+                    onKeyDown={(e) => handleColumnFilterKeyDown(e, "date")}
+                  />
+                </td>
 
                 <td>
                   <input
