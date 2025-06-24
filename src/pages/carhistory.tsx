@@ -18,7 +18,7 @@ const historyGroups = [
         value: "605",
         actionBy: "John Smith",
         timestamp: "2025-03-27 09:30 AM",
-        type: "action",
+        type: "",
         icon: User,
       },
       {
@@ -27,7 +27,7 @@ const historyGroups = [
         value: "725",
         actionBy: "Sarah Johnson",
         timestamp: "2025-03-27 10:15 AM",
-        type: "action",
+        type: "",
         icon: FileText,
       },
       {
@@ -45,7 +45,7 @@ const historyGroups = [
         value: "Partial",
         actionBy: "Lisa Davis",
         timestamp: "2025-03-27 12:30 PM",
-        type: "action",
+        type: "payment",
         icon: AlertCircle,
       },
       // {
@@ -66,7 +66,7 @@ const historyGroups = [
         value: "725",
         actionBy: "Sarah Johnson",
         timestamp: "2025-03-29 10:15 AM",
-        type: "action",
+        type: "",
         icon: FileText,
       },
       {
@@ -84,7 +84,7 @@ const historyGroups = [
         value: "Full Paid",
         actionBy: "Lisa Davis",
         timestamp: "2025-03-29 12:30 PM",
-        type: "action",
+        type: "payment",
         icon: AlertCircle,
       },
       // {

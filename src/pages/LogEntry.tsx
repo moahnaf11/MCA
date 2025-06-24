@@ -25,7 +25,7 @@ const LogEntry = ({ entry, isLast = false }) => {
       case "final":
         return "bg-green-50 border-green-200";
       default:
-        return "bg-gray-50 border-gray-200";
+        return "bg-yellow-50 border-yellow-200";
     }
   };
 
