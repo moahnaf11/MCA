@@ -21,6 +21,7 @@ import {
 import Select from "react-select";
 import LogEntry from "./LogEntry";
 import { finalEntry, historyGroups } from "./carhistory";
+import highlightMatch from "./highlight";
 interface Vehicle {
   id: number;
   run: number;
@@ -372,10 +373,6 @@ const SoldVehicles: React.FC = () => {
       // 2. Dropdown Filters (no changes here)
       const matchesPaymentFilter =
         filterStatus === "all" || vehicle.paymentStatus === filterStatus;
-      // const matchesSoldFilter =
-      //   soldFilter === "all" ||
-      //   (soldFilter === "sold" && vehicle.soldPrice > 0) ||
-      //   (soldFilter === "sold-unpaid" && vehicle.paymentStatus === "unpaid");
 
       // 3. **FIXED**: Column-specific filtering logic
       const matchesColumnFilters = Object.entries(columnFilters).every(
@@ -835,7 +832,7 @@ const SoldVehicles: React.FC = () => {
                     onMouseLeave={() => setHoveredVin(null)}
                     className="px-4 py-3 relative text-sm font-mono text-gray-900"
                   >
-                    {vehicle.vin}
+                    {highlightMatch(vehicle.vin, searchTerm)}
 
                     {/* Tooltip */}
                     {hoveredVin === vehicle.vin && (
@@ -956,16 +953,16 @@ const SoldVehicles: React.FC = () => {
                     {vehicle.date}
                   </td>
                   <td className="px-4 py-3 text-sm font-medium text-gray-900">
-                    {vehicle.paddle}
+                  {highlightMatch(vehicle.paddle, searchTerm)}
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-900">
-                    {vehicle.buyerId}
+                  {highlightMatch(vehicle.buyerId, searchTerm)}
                   </td>
                   <td
                     className="px-4 py-3 text-sm text-gray-900 max-w-xs truncate"
                     title={vehicle.customerName}
                   >
-                    {vehicle.customerName}
+                    {highlightMatch(vehicle.customerName, searchTerm)}
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-900">
                     {vehicle.transId || "-"}
