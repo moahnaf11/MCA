@@ -1,6 +1,5 @@
 import {
   AlertCircle,
-  Car,
   CheckCircle2,
   CreditCard,
   DollarSign,
@@ -60,15 +59,15 @@ const historyGroups = [
   {
     id: 2,
     entries: [
-      {
-        id: 2,
-        action: "Invoice Created",
-        value: "726",
-        actionBy: "Sarah Johnson",
-        timestamp: "2025-03-29 10:15 AM",
-        type: "",
-        icon: FileText,
-      },
+      // {
+      //   id: 2,
+      //   action: "Invoice Created",
+      //   value: "726",
+      //   actionBy: "Sarah Johnson",
+      //   timestamp: "2025-03-29 10:15 AM",
+      //   type: "",
+      //   icon: FileText,
+      // },
       {
         id: 3,
         action: "Payment Received",
