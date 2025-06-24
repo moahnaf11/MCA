@@ -511,7 +511,7 @@ const SoldVehicles: React.FC = () => {
           >
             <Info className="size-6" />
             <div
-              className={`w-full lg:left-[70%] left-[40%] transform -translate-y-1/2 top-1/2  hidden group-hover:block font-thin text-sm absolute`}
+              className={`w-full lg:left-[70%] md:left-[35%] left-[10%] transform -translate-y-1/2 top-1/2  hidden group-hover:block font-thin text-sm absolute`}
             >
               Click cards to filter based on status
             </div>
@@ -614,7 +614,7 @@ const SoldVehicles: React.FC = () => {
         ref={tableRef}
         className={`bg-white rounded-xl ${
           openGrid
-            ? "grid grid-cols-[2fr_1fr] md:grid-cols-[1fr_2fr] lg:grid-cols-[2fr_1fr]"
+            ? "grid grid-cols-[1fr_3fr]  md:grid-cols-[1fr_2fr] lg:grid-cols-[2fr_1fr]"
             : ""
         } min-h-0 flex-1 overflow-y-auto shadow-sm border border-gray-200`}
       >
@@ -1049,7 +1049,7 @@ const SoldVehicles: React.FC = () => {
               </div>
 
               {/* History Content */}
-              <div className="p-6 max-h-full overflow-y-auto">
+              <div className="p-2 max-h-full overflow-y-auto">
                 <div className="space-y-6">
                   {history.paymentStatus === "paid" ? (
                     historyGroups.map((group, groupIndex) => (
