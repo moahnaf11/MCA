@@ -597,10 +597,10 @@ const SoldVehicles: React.FC = () => {
                 placeholder="vin, paddle, make, model"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 w-64 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="pl-10 pr-4 py-2 w-52 md:w-64 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
             </div>
-            <div className="text-sm text-gray-600 bg-red-50 px-3 py-2 rounded-lg border border-red-200">
+            <div className="text-sm text-gray-600 bg-red-50 p-2 rounded-lg border border-red-200">
               <span className="font-medium text-red-700">
                 Total: {filteredVehicles.length}
               </span>
