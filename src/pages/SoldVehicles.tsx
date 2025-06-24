@@ -246,8 +246,12 @@ const SoldVehicles: React.FC = () => {
   });
 
   const [showhide, setshowhide] = useState(false);
+  const [minHeight, setMinHeight] = useState(false)
 
   const [openGrid, setOpenGrid] = useState(false);
+  const [buyNowFilter, setBuyNowFilter] = useState<"all" | "buy" | "notbuy">(
+    "all"
+  );
 
   const [selectedCustomer, setSelectedCustomer] = useState("");
   const [amount, setAmount] = useState<number | "">("");
@@ -388,11 +392,20 @@ const SoldVehicles: React.FC = () => {
             .includes(String(value).toLowerCase());
         }
       );
+      const matchesBuyNowFilter =
+        buyNowFilter === "all" ||
+        (buyNowFilter === "buy" && vehicle.buyNow) ||
+        (buyNowFilter === "notbuy" && !vehicle.buyNow);
 
       // Return true only if all filter conditions are met
-      return matchesSearch && matchesPaymentFilter && matchesColumnFilters;
+      return (
+        matchesSearch &&
+        matchesPaymentFilter &&
+        matchesColumnFilters &&
+        matchesBuyNowFilter
+      );
     });
-  }, [searchTerm, filterStatus, columnFilters]); // Dependency array is correct
+  }, [searchTerm, filterStatus, columnFilters, buyNowFilter]); // Dependency array is correct
 
   // ... (rest of the component state and functions are fine)
   // getStatusColor, getStatusIcon, handlePageChange, generatePageNumbers...
@@ -615,17 +628,11 @@ const SoldVehicles: React.FC = () => {
             : ""
         } min-h-0 flex-1 overflow-y-auto shadow-sm border border-gray-200`}
       >
-        <div className="overflow-x-auto">
+        <div className={`overflow-x-auto ${minHeight ? "min-h-[400px]": "min-h-[0px]" } `}>
           <table>
             <thead className="bg-gray-50 border-b border-gray-200">
               {/* ... (table headers are fine) ... */}
               <tr>
-                {/* <th className="px-4 py-3 text-left">
-                  <input
-                    type="checkbox"
-                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                </th> */}
                 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   #
                 </th>
@@ -761,7 +768,42 @@ const SoldVehicles: React.FC = () => {
                     />
                   </td>
                 )}
-                <td></td>
+                <td className="whitespace-nowrap px-3">
+                  <div className="flex gap-3 justify-center text-sm">
+                    <label className="flex flex-col-reverse items-center space-x-1">
+                      <input
+                        type="radio"
+                        name="buyNowFilter"
+                        value="all"
+                        checked={buyNowFilter === "all"}
+                        onChange={() => setBuyNowFilter("all")}
+                      />
+                      <span className="text-xs">All</span>
+                    </label>
+
+                    <label className="flex flex-col-reverse items-center space-x-1">
+                      <input
+                        type="radio"
+                        name="buyNowFilter"
+                        value="buy"
+                        checked={buyNowFilter === "buy"}
+                        onChange={() => setBuyNowFilter("buy")}
+                      />
+                      <span className="text-xs">Now</span>
+                    </label>
+
+                    <label className="flex flex-col-reverse justify-center space-x-1">
+                      <input
+                        type="radio"
+                        name="buyNowFilter"
+                        value="notbuy"
+                        checked={buyNowFilter === "notbuy"}
+                        onChange={() => setBuyNowFilter("notbuy")}
+                      />
+                      <span className="text-xs">Not Now</span>
+                    </label>
+                  </div>
+                </td>
                 <td>
                   <input
                     type="text"
@@ -828,8 +870,14 @@ const SoldVehicles: React.FC = () => {
                     {vehicle.run}
                   </td>
                   <td
-                    onMouseEnter={(e) => handleMouseEnter(vehicle.vin, e)}
-                    onMouseLeave={() => setHoveredVin(null)}
+                    onMouseEnter={(e) => {
+                      handleMouseEnter(vehicle.vin, e)
+                      setMinHeight(true)
+                    }}
+                    onMouseLeave={() => {
+                      setHoveredVin(null)
+                      setMinHeight(false)
+                    }}
                     className="px-4 py-3 relative text-sm font-mono text-gray-900"
                   >
                     {highlightMatch(vehicle.vin, searchTerm)}
@@ -953,10 +1001,10 @@ const SoldVehicles: React.FC = () => {
                     {vehicle.date}
                   </td>
                   <td className="px-4 py-3 text-sm font-medium text-gray-900">
-                  {highlightMatch(vehicle.paddle, searchTerm)}
+                    {highlightMatch(vehicle.paddle, searchTerm)}
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-900">
-                  {highlightMatch(vehicle.buyerId, searchTerm)}
+                    {highlightMatch(vehicle.buyerId, searchTerm)}
                   </td>
                   <td
                     className="px-4 py-3 text-sm text-gray-900 max-w-xs truncate"
