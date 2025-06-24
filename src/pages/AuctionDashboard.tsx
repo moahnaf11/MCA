@@ -18,7 +18,7 @@ const AuctionDashboard: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Auction Dashboard</h1>
+        <h1 className="text-xl font-bold text-gray-900">Auction Dashboard</h1>
         <div className="flex items-center space-x-4">
           <button className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors">
             Export Data

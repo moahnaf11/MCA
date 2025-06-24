@@ -485,7 +485,7 @@ const SoldVehicles: React.FC = () => {
       {/* ... (Header and StatCards are fine) ... */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Sold Vehicles</h1>
+          <h1 className="text-xl font-bold text-gray-900">Sold Vehicles</h1>
           <p className="text-gray-600 mt-1">
             Manage and track all sold vehicle transactions
           </p>
@@ -503,7 +503,7 @@ const SoldVehicles: React.FC = () => {
         </div>
       </div>
       <div className="">
-        <h2 className="relative group text-lg p-4 justify-end flex font-semibold text-gray-800 mb-4">
+        <h2 className="relative text-lg p-4 justify-end flex font-semibold text-gray-800 mb-4">
           <div
             // onMouseEnter={() => setToolTip(true)}
             // onMouseLeave={() => setToolTip(false)}
@@ -511,9 +511,9 @@ const SoldVehicles: React.FC = () => {
           >
             <Info className="size-6" />
             <div
-              className={`w-full left-[60%] transform -translate-y-1/2 top-1/2  hidden group-hover:block font-thin text-sm absolute`}
+              className={`w-full lg:left-[70%] left-[40%] transform -translate-y-1/2 top-1/2  hidden group-hover:block font-thin text-sm absolute`}
             >
-              Click card to filter based on status
+              Click cards to filter based on status
             </div>
           </div>
         </h2>
@@ -613,7 +613,9 @@ const SoldVehicles: React.FC = () => {
       <div
         ref={tableRef}
         className={`bg-white rounded-xl ${
-          openGrid ? "grid grid-cols-[2fr_1fr]" : ""
+          openGrid
+            ? "grid grid-cols-[2fr_1fr] md:grid-cols-[1fr_2fr] lg:grid-cols-[2fr_1fr]"
+            : ""
         } min-h-0 flex-1 overflow-y-auto shadow-sm border border-gray-200`}
       >
         <div className="overflow-x-auto">
