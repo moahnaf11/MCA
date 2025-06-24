@@ -63,7 +63,7 @@ const historyGroups = [
       {
         id: 2,
         action: "Invoice Created",
-        value: "725",
+        value: "726",
         actionBy: "Sarah Johnson",
         timestamp: "2025-03-29 10:15 AM",
         type: "",
