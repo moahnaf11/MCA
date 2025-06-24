@@ -246,12 +246,10 @@ const SoldVehicles: React.FC = () => {
   });
 
   const [showhide, setshowhide] = useState(false);
-  const [minHeight, setMinHeight] = useState(false)
+  const [minHeight, setMinHeight] = useState(false);
 
   const [openGrid, setOpenGrid] = useState(false);
-  const [buyNowFilter, setBuyNowFilter] = useState<"all" | "buy" | "notbuy">(
-    "all"
-  );
+  const [buyNowFilter, setBuyNowFilter] = useState("all");
 
   const [selectedCustomer, setSelectedCustomer] = useState("");
   const [amount, setAmount] = useState<number | "">("");
@@ -598,6 +596,17 @@ const SoldVehicles: React.FC = () => {
                 {showhide ? "Hide Car Details" : "Show Car Details"}
               </button>
             </div>
+            <select
+              value={buyNowFilter}
+              onChange={(e) => {
+                setBuyNowFilter(e.target.value);
+              }}
+              className="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="all">All</option>
+              <option value="notbuy">Auction Only</option>
+              <option value="buy">Buy Now Only</option>
+            </select>
           </div>
           <div className="flex items-center space-x-4">
             <div className="relative">
@@ -628,7 +637,11 @@ const SoldVehicles: React.FC = () => {
             : ""
         } min-h-0 flex-1 overflow-y-auto shadow-sm border border-gray-200`}
       >
-        <div className={`overflow-x-auto ${minHeight ? "min-h-[400px]": "min-h-[0px]" } `}>
+        <div
+          className={`overflow-x-auto ${
+            minHeight ? "min-h-[400px]" : "min-h-[0px]"
+          } `}
+        >
           <table>
             <thead className="bg-gray-50 border-b border-gray-200">
               {/* ... (table headers are fine) ... */}
@@ -768,42 +781,7 @@ const SoldVehicles: React.FC = () => {
                     />
                   </td>
                 )}
-                <td className="whitespace-nowrap px-3">
-                  <div className="flex gap-3 justify-center text-sm">
-                    <label className="flex flex-col-reverse items-center space-x-1">
-                      <input
-                        type="radio"
-                        name="buyNowFilter"
-                        value="all"
-                        checked={buyNowFilter === "all"}
-                        onChange={() => setBuyNowFilter("all")}
-                      />
-                      <span className="text-xs">All</span>
-                    </label>
-
-                    <label className="flex flex-col-reverse items-center space-x-1">
-                      <input
-                        type="radio"
-                        name="buyNowFilter"
-                        value="buy"
-                        checked={buyNowFilter === "buy"}
-                        onChange={() => setBuyNowFilter("buy")}
-                      />
-                      <span className="text-xs">Now</span>
-                    </label>
-
-                    <label className="flex flex-col-reverse justify-center space-x-1">
-                      <input
-                        type="radio"
-                        name="buyNowFilter"
-                        value="notbuy"
-                        checked={buyNowFilter === "notbuy"}
-                        onChange={() => setBuyNowFilter("notbuy")}
-                      />
-                      <span className="text-xs">Not Now</span>
-                    </label>
-                  </div>
-                </td>
+                <td></td>
                 <td>
                   <input
                     type="text"
@@ -871,12 +849,12 @@ const SoldVehicles: React.FC = () => {
                   </td>
                   <td
                     onMouseEnter={(e) => {
-                      handleMouseEnter(vehicle.vin, e)
-                      setMinHeight(true)
+                      handleMouseEnter(vehicle.vin, e);
+                      setMinHeight(true);
                     }}
                     onMouseLeave={() => {
-                      setHoveredVin(null)
-                      setMinHeight(false)
+                      setHoveredVin(null);
+                      setMinHeight(false);
                     }}
                     className="px-4 py-3 relative text-sm font-mono text-gray-900"
                   >
