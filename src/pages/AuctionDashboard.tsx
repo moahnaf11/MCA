@@ -1,191 +1,227 @@
-import React from 'react';
-import StatCard from '../components/StatCard';
-import { 
-  Gavel, 
-  CheckCircle, 
-  Radio, 
-  Clock,
-  Car,
-  CreditCard,
-  Package,
+import { MetricCard } from "../components/MetricCard";
+import { BarChart } from "../components/charts/BarChart";
+import { LineChart } from "../components/charts/LineChart";
+import { DonutChart } from "../components/charts/DonutChart";
+import { LiveAuctions } from "../components/LiveAuctions";
+import {
+  DollarSign,
+  TrendingUp,
   Users,
+  Car,
+  Gavel,
+  Clock,
+  Package,
   UserCheck,
-  UserX,
-  FileSignature
-} from 'lucide-react';
+  FileText,
+  ShoppingCart,
+  CreditCard,
+  AlertCircle,
+} from "lucide-react";
+import {
+  auctionReportData,
+  fullAuctionReportData,
+  branchSalesData,
+  marhabaInventoryData,
+  consignersInventoryData,
+  customerData,
+} from "../data/chartData";
 
-const AuctionDashboard: React.FC = () => {
+function AuctionDashboard() {
+  const metrics = [
+    // First Row - Red Cards (Auction Data)
+    {
+      title: "Total Auctions",
+      value: "1,040",
+      change: "+2.5%",
+      trend: "up" as const,
+      icon: Gavel,
+      gradient: "bg-gradient-to-r from-red-500 to-red-600",
+    },
+    {
+      title: "Completed Auctions",
+      value: "1,037",
+      change: "+1.8%",
+      trend: "up" as const,
+      icon: FileText,
+      gradient: "bg-gradient-to-r from-red-500 to-red-600",
+    },
+    {
+      title: "Live Auctions",
+      value: "0",
+      change: "0%",
+      trend: "up" as const,
+      icon: Clock,
+      gradient: "bg-gradient-to-r from-red-500 to-red-600",
+    },
+    {
+      title: "Upcoming Auctions",
+      value: "3",
+      change: "+50%",
+      trend: "up" as const,
+      icon: TrendingUp,
+      gradient: "bg-gradient-to-r from-red-500 to-red-600",
+    },
+
+    // Second Row - Blue Cards (Vehicle Sales Data)
+    {
+      title: "Total Sold Vehicles",
+      value: "69,723",
+      change: "+5.2%",
+      trend: "up" as const,
+      icon: Car,
+      gradient: "bg-gradient-to-r from-blue-600 to-blue-700",
+    },
+    {
+      title: "Sold Unpaid",
+      value: "7,154",
+      change: "+3.1%",
+      trend: "up" as const,
+      icon: AlertCircle,
+      gradient: "bg-gradient-to-r from-blue-600 to-blue-700",
+    },
+    {
+      title: "Sold Partial Paid",
+      value: "268",
+      change: "-1.2%",
+      trend: "down" as const,
+      icon: CreditCard,
+      gradient: "bg-gradient-to-r from-blue-600 to-blue-700",
+    },
+    {
+      title: "Sold Full Paid",
+      value: "62,301",
+      change: "+4.8%",
+      trend: "up" as const,
+      icon: DollarSign,
+      gradient: "bg-gradient-to-r from-blue-600 to-blue-700",
+    },
+
+    // Third Row - Green Cards (Inventory Data)
+    {
+      title: "Inventory Total",
+      value: "4,147",
+      change: "+2.3%",
+      trend: "up" as const,
+      icon: Package,
+      gradient: "bg-gradient-to-r from-green-500 to-green-600",
+    },
+    {
+      title: "Marhaba Used Cars",
+      value: "0",
+      change: "0%",
+      trend: "up" as const,
+      icon: Car,
+      gradient: "bg-gradient-to-r from-green-500 to-green-600",
+    },
+    {
+      title: "Marhaba Auction Inventory",
+      value: "1,575",
+      change: "+1.8%",
+      trend: "up" as const,
+      icon: ShoppingCart,
+      gradient: "bg-gradient-to-r from-green-500 to-green-600",
+    },
+    {
+      title: "Consigners Inventory",
+      value: "2,572",
+      change: "+3.2%",
+      trend: "up" as const,
+      icon: Users,
+      gradient: "bg-gradient-to-r from-green-500 to-green-600",
+    },
+
+    // Fourth Row - Orange Cards (User Data)
+    {
+      title: "Total Registered Users",
+      value: "94,379",
+      change: "+8.5%",
+      trend: "up" as const,
+      icon: Users,
+      gradient: "bg-gradient-to-r from-orange-500 to-orange-600",
+    },
+    {
+      title: "With NsID",
+      value: "50,487",
+      change: "+6.2%",
+      trend: "up" as const,
+      icon: UserCheck,
+      gradient: "bg-gradient-to-r from-orange-500 to-orange-600",
+    },
+    {
+      title: "Without NsId",
+      value: "43,892",
+      change: "+4.1%",
+      trend: "up" as const,
+      icon: AlertCircle,
+      gradient: "bg-gradient-to-r from-orange-500 to-orange-600",
+    },
+    {
+      title: "Signed Buyer Agreement",
+      value: "8,009",
+      change: "+12.3%",
+      trend: "up" as const,
+      icon: FileText,
+      gradient: "bg-gradient-to-r from-orange-500 to-orange-600",
+    },
+  ];
+
   return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-900">Auction Dashboard</h1>
-        <div className="flex items-center space-x-4">
-          <button className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors">
-            Export Data
-          </button>
-          <button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
-            New Auction
-          </button>
-        </div>
-      </div>
-
-      {/* Auction Stats */}
-      <div>
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Auction Overview</h2>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      <main className="p-6 space-y-6">
+        {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatCard
-            title="Total Auctions"
-            value={1033}
-            icon={Gavel}
-            color="red"
-            trend={{ value: 5.2, isPositive: true }}
-          />
-          <StatCard
-            title="Completed Auctions"
-            value={1030}
-            icon={CheckCircle}
-            color="red"
-            trend={{ value: 3.1, isPositive: true }}
-          />
-          <StatCard
-            title="Live Auctions"
-            value={0}
-            icon={Radio}
-            color="red"
-          />
-          <StatCard
-            title="Upcoming Auctions"
-            value={3}
-            icon={Clock}
-            color="red"
-            trend={{ value: 1.5, isPositive: true }}
-          />
+          {metrics.map((metric, index) => (
+            <MetricCard key={index} {...metric} />
+          ))}
         </div>
-      </div>
 
-      {/* Sales Stats */}
-      <div>
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Sales Overview</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatCard
-            title="Total Sold Vehicles"
-            value={69414}
-            icon={Car}
-            color="blue"
-            trend={{ value: 8.7, isPositive: true }}
-          />
-          <StatCard
-            title="Sold Unpaid"
-            value={7097}
-            icon={CreditCard}
-            color="blue"
-            trend={{ value: 2.3, isPositive: false }}
-          />
-          <StatCard
-            title="Sold Partial Paid"
-            value={276}
-            icon={CreditCard}
-            color="blue"
-          />
-          <StatCard
-            title="Sold Full Paid"
-            value={62041}
-            icon={CheckCircle}
-            color="blue"
-            trend={{ value: 12.4, isPositive: true }}
-          />
-        </div>
-      </div>
+        {/* Charts Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="xl:col-span-2">
+            <BarChart
+              title="Auction Report - Monthly Comparison"
+              data={auctionReportData}
+            />
+          </div>
 
-      {/* Inventory Stats */}
-      <div>
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Inventory Overview</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatCard
-            title="Inventory Total"
-            value={4196}
-            icon={Package}
-            color="green"
-            trend={{ value: 6.8, isPositive: true }}
+          <DonutChart
+            title="Marhaba Inventory Distribution"
+            data={marhabaInventoryData}
           />
-          <StatCard
-            title="Marhaba Used Cars"
-            value={0}
-            icon={Car}
-            color="green"
-          />
-          <StatCard
-            title="Marhaba Auction Inventory"
-            value={1550}
-            icon={Package}
-            color="green"
-            trend={{ value: 4.2, isPositive: true }}
-          />
-          <StatCard
-            title="Consigners Inventory"
-            value={2646}
-            icon={UserCheck}
-            color="green"
-            trend={{ value: 7.1, isPositive: true }}
-          />
-        </div>
-      </div>
 
-      {/* User Stats */}
-      <div>
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">User Overview</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatCard
-            title="Total Registered Users"
-            value={94250}
-            icon={Users}
-            color="orange"
-            trend={{ value: 15.3, isPositive: true }}
-          />
-          <StatCard
-            title="With NsID"
-            value={50358}
-            icon={UserCheck}
-            color="orange"
-            trend={{ value: 9.2, isPositive: true }}
-          />
-          <StatCard
-            title="Without NsID"
-            value={43892}
-            icon={UserX}
-            color="orange"
-            trend={{ value: 1.8, isPositive: false }}
-          />
-          <StatCard
-            title="Signed Buyer Agreement"
-            value={7950}
-            icon={FileSignature}
-            color="orange"
-            trend={{ value: 22.7, isPositive: true }}
-          />
-        </div>
-      </div>
+          <div className="xl:col-span-3">
+            <BarChart
+              title="Full Auction Report - All Categories"
+              data={fullAuctionReportData}
+            />
+          </div>
 
-      {/* Quick Actions */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button className="flex items-center justify-center space-x-2 bg-red-50 text-red-700 px-4 py-3 rounded-lg hover:bg-red-100 transition-colors">
-            <Gavel className="h-5 w-5" />
-            <span>Create New Auction</span>
-          </button>
-          <button className="flex items-center justify-center space-x-2 bg-blue-50 text-blue-700 px-4 py-3 rounded-lg hover:bg-blue-100 transition-colors">
-            <Car className="h-5 w-5" />
-            <span>Add Vehicle</span>
-          </button>
-          <button className="flex items-center justify-center space-x-2 bg-green-50 text-green-700 px-4 py-3 rounded-lg hover:bg-green-100 transition-colors">
-            <Users className="h-5 w-5" />
-            <span>Manage Users</span>
-          </button>
+          <div className="xl:col-span-3">
+            <LineChart
+              title="Branch Wise - Monthly Sales Report"
+              data={branchSalesData}
+            />
+          </div>
+
+          <DonutChart title="Customer Data Distribution" data={customerData} />
+          <DonutChart
+            title="Consigners Inventory Status"
+            data={consignersInventoryData}
+          />
+          <LiveAuctions />
         </div>
-      </div>
+
+        {/* Bottom Charts */}
+        {/* <div className="grid grid-cols-1 xl:grid-cols-2 gap-6"> */}
+        {/* <DonutChart title="Customer Data Distribution" data={customerData} />
+          <DonutChart
+            title="Consigners Inventory Status"
+            data={consignersInventoryData}
+          /> */}
+        {/* </div> */}
+      </main>
     </div>
   );
-};
+}
 
 export default AuctionDashboard;
